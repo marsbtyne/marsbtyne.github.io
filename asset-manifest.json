@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/nycfridge/static/css/main.5f361e03.chunk.css",
-    "main.js": "/nycfridge/static/js/main.cbca29c2.chunk.js",
-    "main.js.map": "/nycfridge/static/js/main.cbca29c2.chunk.js.map",
+    "main.css": "/nycfridge/static/css/main.45b42b71.chunk.css",
+    "main.js": "/nycfridge/static/js/main.e35bbbb1.chunk.js",
+    "main.js.map": "/nycfridge/static/js/main.e35bbbb1.chunk.js.map",
     "runtime-main.js": "/nycfridge/static/js/runtime-main.6bd1c121.js",
     "runtime-main.js.map": "/nycfridge/static/js/runtime-main.6bd1c121.js.map",
-    "static/js/2.f72ef6ed.chunk.js": "/nycfridge/static/js/2.f72ef6ed.chunk.js",
-    "static/js/2.f72ef6ed.chunk.js.map": "/nycfridge/static/js/2.f72ef6ed.chunk.js.map",
+    "static/js/2.50964f65.chunk.js": "/nycfridge/static/js/2.50964f65.chunk.js",
+    "static/js/2.50964f65.chunk.js.map": "/nycfridge/static/js/2.50964f65.chunk.js.map",
     "index.html": "/nycfridge/index.html",
-    "precache-manifest.07241c6e25914c605d5f7787e277f79c.js": "/nycfridge/precache-manifest.07241c6e25914c605d5f7787e277f79c.js",
+    "precache-manifest.6f388bf4b38382d4e6f22d41fe21d673.js": "/nycfridge/precache-manifest.6f388bf4b38382d4e6f22d41fe21d673.js",
     "service-worker.js": "/nycfridge/service-worker.js",
-    "static/css/main.5f361e03.chunk.css.map": "/nycfridge/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.f72ef6ed.chunk.js.LICENSE.txt": "/nycfridge/static/js/2.f72ef6ed.chunk.js.LICENSE.txt",
+    "static/css/main.45b42b71.chunk.css.map": "/nycfridge/static/css/main.45b42b71.chunk.css.map",
+    "static/js/2.50964f65.chunk.js.LICENSE.txt": "/nycfridge/static/js/2.50964f65.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/nycfridge/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6bd1c121.js",
-    "static/js/2.f72ef6ed.chunk.js",
-    "static/css/main.5f361e03.chunk.css",
-    "static/js/main.cbca29c2.chunk.js"
+    "static/js/2.50964f65.chunk.js",
+    "static/css/main.45b42b71.chunk.css",
+    "static/js/main.e35bbbb1.chunk.js"
   ]
 }
