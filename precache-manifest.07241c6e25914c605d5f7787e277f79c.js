@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "06a600c89a03298f3cf8e5b713e7be06",
+    "revision": "fc554d3deb6d3a6b8c3be01546a206b8",
     "url": "/nycfridge/index.html"
   },
   {
-    "revision": "1d8cd2f54cceff61afc3",
+    "revision": "0a13d44d6818c5d1f650",
     "url": "/nycfridge/static/css/main.5f361e03.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/nycfridge/static/js/2.f72ef6ed.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1d8cd2f54cceff61afc3",
-    "url": "/nycfridge/static/js/main.a86d5c6a.chunk.js"
+    "revision": "0a13d44d6818c5d1f650",
+    "url": "/nycfridge/static/js/main.cbca29c2.chunk.js"
   },
   {
     "revision": "044e5e273992d4a7d9c3",
