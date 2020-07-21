@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "727d59fbb6d578c226a235ae3f9433ad",
+    "revision": "ed044a4888549c0496071e7a6a801fcd",
     "url": "/nycfridge/index.html"
   },
   {
-    "revision": "aac6e817747526377f00",
-    "url": "/nycfridge/static/css/main.45b42b71.chunk.css"
+    "revision": "b0e2d734d8cb6924ec97",
+    "url": "/nycfridge/static/css/main.5b24504c.chunk.css"
   },
   {
-    "revision": "1fd3460285bb6f692c07",
-    "url": "/nycfridge/static/js/2.50964f65.chunk.js"
+    "revision": "567fdcd3339c8375fd9d",
+    "url": "/nycfridge/static/js/2.d7cc2287.chunk.js"
   },
   {
     "revision": "3a08a7c8f8e6231522abe29a929e6912",
-    "url": "/nycfridge/static/js/2.50964f65.chunk.js.LICENSE.txt"
+    "url": "/nycfridge/static/js/2.d7cc2287.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aac6e817747526377f00",
-    "url": "/nycfridge/static/js/main.e35bbbb1.chunk.js"
+    "revision": "b0e2d734d8cb6924ec97",
+    "url": "/nycfridge/static/js/main.603d4a4b.chunk.js"
   },
   {
     "revision": "044e5e273992d4a7d9c3",
