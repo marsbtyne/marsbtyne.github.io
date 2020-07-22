@@ -1,6 +1,13 @@
-steps:
-  - name: Hello world action
-    with: # Set the secret as an input
-      super_secret: ${{ secrets.API_KEY }}
-    env: # Or as an environment variable
-      super_secret: ${{ secrets.API_KEY }}
+
+  on: page_build
+  name: get secret
+  jobs: 
+    my-job:
+      name: my job
+      runs-on: ubuntu-latest
+      steps:
+         - name: get api key
+           env: 
+             super-secret: ${{ secrets.API_KEY }}
+           with: 
+             super-secret: ${{ secrets.API_KEY }}
