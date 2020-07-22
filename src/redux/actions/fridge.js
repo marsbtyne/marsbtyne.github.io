@@ -15,12 +15,36 @@ export const orderFail = () => {
 }
 export const submitFridge = (submissionData) => {
   return dispatch => {
-    axios.post('/fridges.json', submissionData)
+    let updatedData = submissionData;
+  Geocode.setApiKey(process.env.REACT_APP_AUTH_TOKEN);
+  let streetAddress = submissionData.streetAddress;
+  let fullAddress = streetAddress.concat(" " , submissionData.borough, " NY");
+  console.log(fullAddress)
+  Geocode.fromAddress(fullAddress).then(response => {
+    const { lat, lng } = response.results[0].geometry.location;
+    console.log(lat, lng);
+    updatedData = {
+      ...submissionData, 
+      lat: lat,
+      lng: lng
+    }
+    console.log('with coords', updatedData)
+    axios.post('/fridges.json', updatedData)
       .then(response => {
-        dispatch(addFridgeSuccess(response.data.name, submissionData));
+        dispatch(addFridgeSuccess(response.data.name, updatedData));
       })
       .catch(error => {
-        dispatch(orderFail(error));
+        dispatch(fetchFridgeFail(error));
+      });
+    })
+    .catch(error => {
+      });
+    axios.post('/fridges.json', updatedData)
+      .then(response => {
+        dispatch(addFridgeSuccess(response.data.name, updatedData));
+      })
+      .catch(error => {
+        dispatch(fetchFridgeFail(error));
       });
     }
 }
@@ -32,7 +56,9 @@ export const fetchFridgesStart = () => {
 }
 
 export const fetchFridgeFail = (error) => {
-
+  return {
+    type: actionTypes.FETCH_FRUEDGE_FAIL
+  }
 }
 
 export const fetchFridgeSuccess = (fridges) => {
@@ -51,19 +77,6 @@ export const fetchFridges = () => {
       const fetchedFridges = [];
       for (let key in response.data) {
         let f = response.data[key]
-        let streetAddress = f.streetAddress;
-        let fullAddress = streetAddress.concat(" " , f.borough, " NY");
-        console.log(streetAddress);
-        Geocode.fromAddress(fullAddress).then(response => {
-          const { lat, lng } = response.results[0].geometry.location;
-          f.lat = lat;
-          f.lng = lng;
-          f.id = key;
-          },
-        )
-          .catch(error => {
-            console.error(error);
-          });
           console.log(f);
           fetchedFridges.push(f);
         }
@@ -71,7 +84,7 @@ export const fetchFridges = () => {
       dispatch(fetchFridgeSuccess(fetchedFridges));
     })
     .catch(error => {
-      dispatch(fetchFridgeFail(error));
+      
     });
   }
 }
