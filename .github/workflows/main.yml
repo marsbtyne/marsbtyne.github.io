@@ -1,0 +1,6 @@
+steps:
+  - name: Hello world action
+    with: # Set the secret as an input
+      super_secret: ${{ secrets.API_KEY }}
+    env: # Or as an environment variable
+      super_secret: ${{ secrets.API_KEY }}
