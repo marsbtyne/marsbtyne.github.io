@@ -1,0 +1,12 @@
+{
+  "fridges":
+  [
+  {
+      "borough": "Brooklyn",
+      "name": "Greenpoint Fridge",
+      "neighborhood": "Greenpoint",
+      "streetAddress": "17 Nassau Ave",
+      "contactGroup": "North Brooklyn Mutual Aid"
+  }
+]
+}

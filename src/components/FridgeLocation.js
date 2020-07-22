@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import thunk from 'redux-thunk';
 import { compose, withProps } from 'recompose';
 import Kitchen from '@material-ui/icons/Kitchen';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
@@ -6,16 +8,18 @@ import Geocode from "react-geocode";
 import axios from '../axios';
 
 import Fridge from '../fridge.png';
+import Spinner from './UI/Spinner';
+import * as actions from '../redux/actions/fridge';
+
+
 
 import Map from './Map';
-import FridgeModal from './FridgeModal';
 
 class FridgeLocation extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      fridges: [],
       location: {
         address: '252 Broadway Brooklyn NY 11211',
         lat: 40.7,
@@ -24,67 +28,66 @@ class FridgeLocation extends Component {
       fridgeLocation: {},
       hover: null
     }
-    this.toggleHover = this.toggleHover.bind(this)
   }
   
-  componentDidMount() {
-    Geocode.setApiKey(process.env.REACT_APP_AUTH_TOKEN);
-    
-    axios.get('/fridges.json')
-    .then(response => {
-      const fetchedFridges = [];
-      for (let key in response.data) {
-        let f = response.data[key]
-        let streetAddress = f.streetAddress;
-        let fullAddress = streetAddress.concat(" " , f.borough, " NY");
-        console.log(streetAddress);
-        Geocode.fromAddress(fullAddress).then(response => {
-          const { lat, lng } = response.results[0].geometry.location;
-          f.lat = lat;
-          f.lng = lng;
-          f.id = key;
-          },
-          error => {
-            console.error(error);
-          });
-          console.log(f);
-          fetchedFridges.push(f);
-        }
-      console.log(fetchedFridges)
-      this.setState({fridges: fetchedFridges})
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  };
+  componentDidMount () {
+    this.props.onFridgesLoad()
+  }
 
   toggleHover = (id) => {
     let h = this.state.hover === id ? null : id;
     this.setState({hover: h})
   };
+
+  addFridge = () => {
+    let data = {
+      name: 'Bushwick Fridge',
+      streetAddress: '133 Knickerbocker Ave',
+      neighborhood: 'Bushwick',
+      borough: 'Brooklyn',
+      contactGroup: 'Bushwick Mutual Aid',
+      confirmed: false
+    }
+    this.props.onFridgeAdded(data)
+  }
   
   render (){
-    if (this.state.fridges) {
-      console.log('[render]', this.state.fridges)
-    this.state.fridges.forEach(f => {
-      console.log(f)
-    });
-    }
-    return (
-      <div style={{ height: '90vh', width: '80%', margin: 'auto'}}>
-        
+    let map = (<Spinner />);
+    if (this.props.fridges && !this.props.loading) {
+      map = (
         <Map 
           location={this.state.location}
           zoomLevel={12}
           fridgeLocation={this.state.fridgeLocation}
           toggleHover={this.toggleHover}
           hover={this.state.hover}
-          fridges={this.state.fridges}
+          fridges={this.props.fridges}
+          confirmed={this.props.onFridgeConfirmed}
           />
+      )
+    }
+    return (
+      <div style={{ height: '90vh', width: '80%', margin: 'auto'}}>
+        <button onClick={this.addFridge}>Add New Fridge</button>
+        {map}
           
       </div>
     )
   }
 }
 
-export default FridgeLocation;
+const mapStateToProps = state => {
+  return {
+    fridges: state.fridges,
+    loading: state.loading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFridgesLoad: () => dispatch(actions.fetchFridges()),
+    onFridgeAdded: (fridge) => dispatch(actions.submitFridge(fridge)),
+    onFridgeConfirmed: (fridgeID) => dispatch(actions.confirmFridge(fridgeID))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FridgeLocation);
