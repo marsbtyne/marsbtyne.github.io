@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Box, Button, Grommet, Heading, Layer } from 'grommet';
 import { connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import { compose, withProps } from 'recompose';
@@ -9,13 +10,14 @@ import axios from '../axios';
 
 import Fridge from '../fridge.png';
 import Spinner from './UI/Spinner';
+import FridgeModal from './UI/FridgeModal';
+import FridgeForm from './FridgeForm';
 import * as actions from '../redux/actions/fridge';
-
 
 
 import Map from './Map';
 
-class FridgeLocation extends Component {
+class FridgeFinder extends Component {
 
   constructor (props) {
     super(props)
@@ -25,11 +27,17 @@ class FridgeLocation extends Component {
         lat: 40.7,
         lng: -73.9
       },
-      fridgeLocation: {},
-      hover: null
+      hover: null,
+      modal: false,
     }
   }
-  
+
+  onModalOpen = () =>  {
+    this.setState({modal: true});
+  }
+  modalClosedHandler = () => {
+    this.setState({modal: false});
+  }
   componentDidMount () {
     this.props.onFridgesLoad()
   }
@@ -39,20 +47,17 @@ class FridgeLocation extends Component {
     this.setState({hover: h})
   };
 
+  fridgeAdded = (fridge) => {
+    this.props.onFridgeAdded(fridge);
+  }
+
   addFridge = () => {
-    let data = {
-      name: 'Bushwick Fridge',
-      streetAddress: '133 Knickerbocker Ave',
-      neighborhood: 'Bushwick',
-      borough: 'Brooklyn',
-      contactGroup: 'Bushwick Mutual Aid',
-      confirmed: false
-    }
-    this.props.onFridgeAdded(data)
+    this.onModalOpen();
   }
   
   render (){
-    let map = (<Spinner />);
+    let map;
+    let fridgeSubmission = (<Spinner />);
     if (this.props.fridges && !this.props.loading) {
       map = (
         <Map 
@@ -62,13 +67,29 @@ class FridgeLocation extends Component {
           toggleHover={this.toggleHover}
           hover={this.state.hover}
           fridges={this.props.fridges}
-          confirmed={this.props.onFridgeConfirmed}
           />
       )
-    }
+      fridgeSubmission = (<Layer
+        full="vertical"
+        modal
+      animation="fadeIn"
+      onEsc={this.modalClosedHandler}
+      onClickOutside={this.modalClosedHandler}
+    >
+      <FridgeForm 
+        onClose={this.modalClosedHandler}
+        onSubmit={this.fridgeAdded}
+      />
+    </Layer>)
+      }
     return (
       <div style={{ height: '90vh', width: '80%', margin: 'auto'}}>
-        <button onClick={this.addFridge}>Add New Fridge</button>
+        
+      <Box align="center" pad="medium">
+      <Heading level="2">NYC Community Fridges</Heading>
+        <Button primary label="Add Fridge" active onClick={this.addFridge}/>
+        </Box>
+        {this.state.modal && fridgeSubmission}
         {map}
           
       </div>
@@ -87,7 +108,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onFridgesLoad: () => dispatch(actions.fetchFridges()),
     onFridgeAdded: (fridge) => dispatch(actions.submitFridge(fridge)),
-    onFridgeConfirmed: (fridgeID) => dispatch(actions.confirmFridge(fridgeID))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FridgeLocation);
+export default connect(mapStateToProps, mapDispatchToProps)(FridgeFinder);

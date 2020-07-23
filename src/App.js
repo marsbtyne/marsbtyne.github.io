@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Grommet } from 'grommet';
+import {Helmet} from 'react-helmet'
 import './App.css';
 
-import FridgeLocation from './components/FridgeLocation'
+import FridgeFinder from './components/FridgeFinder'
 
 class App extends Component {
+  
   render () {
+    const theme = {
+      global: {
+       colors: {
+         'light-2': '#f5f5f5',
+         'text': {
+           light: 'rgba(0, 0, 0, 0.87)',
+         },
+       },
+       edgeSize: {
+         small: '14px',
+       },
+       elevation: {
+         light: {
+           medium: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+         },
+       },
+        font: {
+          family: 'Roboto',
+          size: '14px',
+          height: '20px',
+        },
+      },
+    };
   return (
     <div className="App">
-      <FridgeLocation />
+      <Helmet>
+    <title>Map of NYC Community Fridges</title>
+    <meta name="description" content="Map of free community fridges and food shares across New York City" />
+  </Helmet>
+      <Grommet theme={theme}>
+        <FridgeFinder />
+      </Grommet>
     </div>
   );
 }

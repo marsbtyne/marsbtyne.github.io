@@ -1,6 +1,6 @@
 import React from 'react';
 import Kitchen from '@material-ui/icons/Kitchen'
-
+import './pin.css'
 import InfoBox from './UI/InfoBox';
 
 const LocationPin = (props) => (

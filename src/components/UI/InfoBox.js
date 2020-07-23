@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import './modal.css';
+import classes from  './Modal.module.css';
 
 
 class InfoBox extends Component {
   render () {
     return (
-      <div className="Info">
-        {this.props.fridgeData.name}<br/>
-        {this.props.fridgeData.streetAddress} <br />
-        {this.props.fridgeData.contactGroup}
+      <div className={classes.Info}>
+        <div className={classes.popupContainer}>
+        <div className={classes.popuBubbleAnchor}>
+          <div className={classes.popupBubble}>
+            {this.props.fridgeData.name}<br/>
+            {this.props.fridgeData.streetAddress} <br />
+            {this.props.fridgeData.contactGroup}
+          </div>
+        </div>
+        </div>
       </div>
     )
   }

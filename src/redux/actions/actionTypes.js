@@ -1,6 +1,14 @@
-export const ADD_FRIDGE = 'ADD_FRIDGE';
 export const LOAD_FRIDGES = 'LOAD_FRIDGES';
 export const CONFIRM_FRIDGE = 'CONFIRM_FRIDGE';
 
 export const FETCH_FRIDGE_START = 'FETCH_FRIDGE_START';
-export const FETCH_FRUEDGE_FAIL = 'FETCH_FRIDGE_FAIL';
+export const FETCH_FRIDGE_FAIL = 'FETCH_FRIDGE_FAIL';
+
+export const GET_FRIDGE = 'GET_FRIDGE';
+
+export const UPDATE_FRIDGE = 'UPDATE_FRIDGE';
+
+export const ADD_FRIDGE = 'ADD_FRIDGE';
+export const ADD_FRIDGE_START = 'ADD_FRIDGE_START'
+
+export const CHECK_FRIDGE = 'CHECK_FRIDGE';
