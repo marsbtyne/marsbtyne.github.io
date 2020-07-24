@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/nycfridge/static/css/main.656c9b32.chunk.css",
-    "main.js": "/nycfridge/static/js/main.ff62b9ed.chunk.js",
-    "main.js.map": "/nycfridge/static/js/main.ff62b9ed.chunk.js.map",
+    "main.js": "/nycfridge/static/js/main.179413db.chunk.js",
+    "main.js.map": "/nycfridge/static/js/main.179413db.chunk.js.map",
     "runtime-main.js": "/nycfridge/static/js/runtime-main.6bd1c121.js",
     "runtime-main.js.map": "/nycfridge/static/js/runtime-main.6bd1c121.js.map",
-    "static/js/2.4b94a787.chunk.js": "/nycfridge/static/js/2.4b94a787.chunk.js",
-    "static/js/2.4b94a787.chunk.js.map": "/nycfridge/static/js/2.4b94a787.chunk.js.map",
+    "static/js/2.a1e13327.chunk.js": "/nycfridge/static/js/2.a1e13327.chunk.js",
+    "static/js/2.a1e13327.chunk.js.map": "/nycfridge/static/js/2.a1e13327.chunk.js.map",
     "index.html": "/nycfridge/index.html",
-    "precache-manifest.b59d68b5cc38e5e3548ef4202d264b2f.js": "/nycfridge/precache-manifest.b59d68b5cc38e5e3548ef4202d264b2f.js",
+    "precache-manifest.76e9f2d20bb599b5324dc5b440cffb0a.js": "/nycfridge/precache-manifest.76e9f2d20bb599b5324dc5b440cffb0a.js",
     "service-worker.js": "/nycfridge/service-worker.js",
     "static/css/main.656c9b32.chunk.css.map": "/nycfridge/static/css/main.656c9b32.chunk.css.map",
-    "static/js/2.4b94a787.chunk.js.LICENSE.txt": "/nycfridge/static/js/2.4b94a787.chunk.js.LICENSE.txt"
+    "static/js/2.a1e13327.chunk.js.LICENSE.txt": "/nycfridge/static/js/2.a1e13327.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6bd1c121.js",
-    "static/js/2.4b94a787.chunk.js",
+    "static/js/2.a1e13327.chunk.js",
     "static/css/main.656c9b32.chunk.css",
-    "static/js/main.ff62b9ed.chunk.js"
+    "static/js/main.179413db.chunk.js"
   ]
 }
