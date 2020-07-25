@@ -22,7 +22,7 @@ class Map extends Component {
     this.submitButton = React.createRef();
     this.state = {
       modal: null,
-      checking: false, 
+      checking: false,
       url: "",
       image: null,
       progress: 0,
@@ -31,11 +31,22 @@ class Map extends Component {
   }
 
   focusTextInput() {
-    // Explicitly focus the text input using the raw DOM API
-    // Note: we're accessing "current" to get the DOM node
     this.textInput.current.focus();
   }
-  
+
+  bindResizeListener = (map, maps) => {
+    maps.event.addDomListenerOnce(map, 'idle', () => {
+      map.gestureHandling = "greedy"
+    });
+  };
+
+  handleApiLoaded = (map, maps) => {
+    console.log('map', map, maps)
+    map.gestureHandling = "greedy"
+    // Bind the resize listener
+    this.bindResizeListener(map, maps);
+  }
+
   onModalOpen = (id) => {
     this.props.getFridge(id);
     this.setState({ modal: id });
@@ -54,15 +65,15 @@ class Map extends Component {
   getMapLink = (fridge) => {
     return 'https://www.google.com/maps/dir/?api=1&destination='.concat(fridge.lat, ",", fridge.lng)
   }
-  
+
   getChecks = (currentFridge) => {
     const checks = [];
-      for (let key in currentFridge.checks) {
-        checks.push({
-          ...currentFridge.checks[key],
-          id: key
-        });
-        }
+    for (let key in currentFridge.checks) {
+      checks.push({
+        ...currentFridge.checks[key],
+        id: key
+      });
+    }
     return checks;
   }
 
@@ -82,11 +93,11 @@ class Map extends Component {
       let lastChecked;
       if (f.confirmed) {
         status = (
-            <h4>Status: Confirmed</h4>
+          <h4>Status: Confirmed</h4>
         )
         check = (
-          <Box pad={{bottom: 'large'}}>
-          <Button primary active onClick={() => this.setState({ checking: true })} label="Check Fridge" />
+          <Box pad={{ bottom: 'large' }}>
+            <Button primary active onClick={() => this.setState({ checking: true })} label="Check Fridge" />
           </Box>
         )
         if (f.checks) {
@@ -98,7 +109,7 @@ class Map extends Component {
           let parsed = date.toLocaleString();
           let lastPic = f.imageURL ? (<Image fit="contain" height="400" width="250" src={f.imageURL} />) : null;
           lastChecked = (
-            <Box margin="small" gap="xsmall" style={{alignItems: "center"}}>
+            <Box margin="small" gap="xsmall" style={{ alignItems: "center" }}>
               <h3>Last checked: {parsed}</h3>
               Most recent note:  {note}
               {lastPic}
@@ -108,31 +119,30 @@ class Map extends Component {
         if (this.state.checking) {
           check = (
             <Box>
-        {/* <div className="file-upload-button"> */}
-        <input type="file" name="file" id="file" class="inputfile" onChange={this.handleChange}/>
-<label for="file">Upload Fridge Picture</label>
+              <input type="file" name="file" id="file" class="inputfile" onChange={this.handleChange} />
+              <label for="file">Upload Fridge Picture</label>
               <Form onSubmit={(event) => this.confirmCheck(event.value, f)}>
                 <Box gap="small">
-                <FormField htmlFor="text">
-                <TextInput ref={this.textInput} onClick={this.focusTextInput} size="small"id="textinput-id" name="name" placeholder="Your Name (optional)" />
-                </FormField>
-                <FormField
-                  name="notes"
-                  label="Notes"
-                  htmlFor="text-area"
-                  ref={this.textInput}
-                  component={TextArea}
-                  placeholder="leave your notes about this check-in here!"
-                />
-                
-                <Box direction="row" gap="xsmall" >
-                  <Button size="small" active label="Cancel" onClick={() => this.setState({checking: false})} />
-                  <Button ref={this.submitButton} size="small" type="submit" primary label="Submit Check" />
-                </Box>
+                  <FormField htmlFor="text">
+                    <TextInput ref={this.textInput} onClick={this.focusTextInput} size="small" id="textinput-id" name="name" placeholder="Your Name (optional)" />
+                  </FormField>
+                  <FormField
+                    name="notes"
+                    label="Notes"
+                    htmlFor="text-area"
+                    ref={this.textInput}
+                    component={TextArea}
+                    placeholder="leave your notes about this check-in here!"
+                  />
+
+                  <Box direction="row" gap="xsmall" >
+                    <Button size="small" active label="Cancel" onClick={() => this.setState({ checking: false })} />
+                    <Button ref={this.submitButton} size="small" type="submit" primary label="Submit Check" />
+                  </Box>
 
                 </Box>
               </Form>
-              </Box>)
+            </Box>)
         }
       }
       else {
@@ -146,10 +156,10 @@ class Map extends Component {
           pad="medium"
           overflow="hidden"
         >
-          
+
           <h2>{f.name}</h2>
           <h2>Neighborhood: {f.neighborhood}</h2>
-          <h3>Location: <Anchor href={this.getMapLink(f)}>{f.streetAddress}<Launch /></Anchor></h3> 
+          <h3>Location: <Anchor href={this.getMapLink(f)}>{f.streetAddress}<Launch /></Anchor></h3>
           <h3>Notes: {f.notes}</h3>
           <Button href={f.link} label="Social Media" />
           {status}
@@ -159,12 +169,10 @@ class Map extends Component {
       );
     }
     return (
-      
-        <div className="google-map" height="100%" width="80%">
-          
-          {this.state.modal && (
-            <Layer onClickOutside={this.modalClosedHandler}>
-            <Box overflow='hidden'>
+      <Box className="google-map">
+        {this.state.modal && (
+          <Layer full="vertical" onClickOutside={this.modalClosedHandler}>
+            <Box overflow='hidden' width="large">
               <Box
                 flex={false}
                 pad={{ horizontal: 'medium' }}
@@ -181,35 +189,37 @@ class Map extends Component {
                     alignSelf="start"
                     onClick={this.modalClosedHandler}
                     label="Back To Map"
-                    icon={<NavigateBeforeIcon fontSize="large" />}/></strong></Heading>
+                    icon={<NavigateBeforeIcon fontSize="large" />} /></strong></Heading>
               </Box>
               <Box flex={true} align='center' background='light-1' overflow='auto'>
                 <Box flex={false} background='white'>
                   {modalInfo}
-                <Button alignSelf="center" margin="medium" onClick={this.modalClosedHandler} label="Back To Map" icon={<NavigateBeforeIcon />}/>
+                  <Button alignSelf="center" margin="medium" onClick={this.modalClosedHandler} label="Back To Map" icon={<NavigateBeforeIcon />} />
                 </Box>
               </Box>
             </Box>
           </Layer>)}
-          <GoogleMapReact
+        <GoogleMapReact
 
-            bootstrapURLKeys={{ key: process.env.REACT_APP_AUTH_TOKEN }}
-            defaultCenter={this.props.location}
-            defaultZoom={this.props.zoomLevel}
-          >
-            {this.props.fridges.map(f => (
-              <LocationPin
-                lat={f.lat}
-                lng={f.lng}
-                fridgeData={f}
-                showInfoBox={this.props.showInfoBox}
-                toggleHover={this.props.toggleHover}
-                hover={this.props.hover}
-                onModalOpen={this.onModalOpen}
-              />
-            ))}
-          </GoogleMapReact>
-        </div>
+          bootstrapURLKeys={{ key: process.env.REACT_APP_AUTH_TOKEN }}
+          defaultCenter={this.props.location}
+          defaultZoom={this.props.zoomLevel}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
+        >
+          {this.props.fridges.map(f => (
+            <LocationPin
+              lat={f.lat}
+              lng={f.lng}
+              fridgeData={f}
+              showInfoBox={this.props.showInfoBox}
+              toggleHover={this.props.toggleHover}
+              hover={this.props.hover}
+              onModalOpen={this.onModalOpen}
+            />
+          ))}
+        </GoogleMapReact>
+      </Box>
     )
   }
 }

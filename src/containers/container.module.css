@@ -1,0 +1,25 @@
+.Container {
+  position: relative;
+  height: 100vh;
+}
+.contentWrap {
+  padding-bottom: 2.5rem;
+}
+
+.Footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+}
+
+@media screen and (max-width: 768px) {
+  .Container {
+    position: relative;
+    min-height: 90vh;
+    max-height: 96vh;
+  }
+  .Footer {
+    display: none !important;
+  }
+}

@@ -8,8 +8,9 @@
 
 .google-map {
   width: 100%;
-  height: 60vh;
-  margin-bottom: 100px;
+  height: 80vh; 
+  position: fixed;
+  overflow: hidden;
 }
 
 .pin {
@@ -40,13 +41,6 @@
   background-color: #ccc;
 }
 
-.file-upload-button:hover {
-  
-}
-
-.file-upload-button {
-  
-}
 
 .inputfile {
 	width: 0.1px;
@@ -98,5 +92,11 @@
 
   .pin-icon {
     font-size: 10vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .google-map {
+    height: 80vh;
   }
 }
