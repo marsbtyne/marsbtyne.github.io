@@ -27,6 +27,61 @@
   font-size: 1.3em;
 }
 
+.file-upload-wrapper {
+  position: relative; 
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+}
+.file-upload-input {
+  color: #fff;
+  font-size: 16px;
+  padding: 11px 17px; 
+  border: none;
+  background-color: #ccc;
+}
+
+.file-upload-button:hover {
+  
+}
+
+.file-upload-button {
+  
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+  cursor: pointer; 
+  display: inline-block; 
+  color: #252525;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 11px 20px; 
+  border: 1px solid #333333;
+  border-radius: 10rem;
+  margin-left: -1px;  
+  margin-bottom: 1rem;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: #eeeeee;
+}
+
+.custom-file-upload-hidden {
+  display: none;
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+
 @media screen and (min-width: 799px) {
   .google-map {
     height: 80vh;

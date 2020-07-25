@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Grommet } from 'grommet';
+import { Grommet, Box, TextInput, Text, Heading, Button } from 'grommet';
 import {Helmet} from 'react-helmet'
 import './App.css';
+import firebase from './firebase';
 
-import FridgeFinder from './components/FridgeFinder'
+import FridgeFinder from './containers/FridgeFinder'
 
 class App extends Component {
   
@@ -37,9 +38,10 @@ class App extends Component {
     <title>Map of NYC Community Fridges</title>
     <meta name="description" content="Map of free community fridges and food shares across New York City" />
   </Helmet>
-      <Grommet theme={theme}>
-        <FridgeFinder />
-      </Grommet>
+  <Grommet>
+    
+    <FridgeFinder />
+  </Grommet>
     </div>
   );
 }

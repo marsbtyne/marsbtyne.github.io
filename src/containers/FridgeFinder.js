@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Button, Grommet, Heading, Layer } from 'grommet';
+import { Box, Button, CheckBox, Grommet, Heading, Header, Layer, Footer, Text } from 'grommet';
 import { connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import { compose, withProps } from 'recompose';
@@ -8,14 +8,13 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import Geocode from "react-geocode";
 import axios from '../axios';
 
-import Fridge from '../fridge.png';
-import Spinner from './UI/Spinner';
-import FridgeModal from './UI/FridgeModal';
-import FridgeForm from './FridgeForm';
+import Spinner from '../components/UI/Spinner';
+import FridgeModal from '../components/UI/FridgeModal';
+import FridgeForm from '../components/FridgeForm';
 import * as actions from '../redux/actions/fridge';
 
-
-import Map from './Map';
+import firebase from '../firebase';
+import Map from '../components/Map';
 
 class FridgeFinder extends Component {
 
@@ -29,6 +28,10 @@ class FridgeFinder extends Component {
       },
       hover: null,
       modal: false,
+      url: "",
+      image: null,
+      progress: 0,
+      showInfoBox: true
     }
   }
 
@@ -39,7 +42,7 @@ class FridgeFinder extends Component {
     this.setState({modal: false});
   }
   componentDidMount () {
-    this.props.onFridgesLoad()
+    this.props.onFridgesLoad();
   }
 
   toggleHover = (id) => {
@@ -56,21 +59,20 @@ class FridgeFinder extends Component {
   }
   
   render (){
-    let map;
+    let map = (<Spinner />);
     let fridgeSubmission = (<Spinner />);
-    if (this.props.fridges && !this.props.loading) {
+    if (this.props.fridges) {
       map = (
         <Map 
           location={this.state.location}
           zoomLevel={12}
-          fridgeLocation={this.state.fridgeLocation}
           toggleHover={this.toggleHover}
           hover={this.state.hover}
+          showInfoBox={this.state.showInfoBox}
           fridges={this.props.fridges}
           />
       )
       fridgeSubmission = (<Layer
-        full="vertical"
         modal
       animation="fadeIn"
       onEsc={this.modalClosedHandler}
@@ -83,15 +85,29 @@ class FridgeFinder extends Component {
     </Layer>)
       }
     return (
-      <div style={{ height: '90vh', width: '80%', margin: 'auto'}}>
-        
-      <Box align="center" pad="medium">
-      <Heading level="2">NYC Community Fridges</Heading>
+      <div>
+        <Header background="light-4" pad="xsmall" justify="center">
+      <Box  gap="small" alignSelf="center">
+      <Heading level="3">NYC Community Fridges</Heading>
+      <Text>Current Fridge Count : {this.props.fridges.length}</Text>
+      </Box>
+
+    </Header>
+      
+      <Box justify ="center" direction="row" pad="xsmall" gap="small">
         <Button primary label="Add Fridge" active onClick={this.addFridge}/>
+        <CheckBox
+        name="toggle"
+        toggle
+        checked={this.state.showInfoBox}
+        label="Show Fridge Info Boxes"
+        onChange={event => this.setState({ showInfoBox: event.target.checked})}
+      />
+            
+
         </Box>
         {this.state.modal && fridgeSubmission}
         {map}
-          
       </div>
     )
   }

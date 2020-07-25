@@ -32,6 +32,12 @@ const reducer = (state = initialState, action) => {
         loading: true,
         submitted: false
       }
+    case actionTypes.CHECK_START: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
     case actionTypes.ADD_FRIDGE:
       const newFridge = {
         ...action.data,
@@ -44,10 +50,39 @@ const reducer = (state = initialState, action) => {
         loading: false,
         submitted: true
       }
-    case actionTypes.CHECK_FRIDGE:
+    case actionTypes.POST_CHECK_IMAGE:
       return {
         ...state,
-        currentFridge: action.data
+        currentFridge: {
+          ...state.currentFridge,
+          imageURL: action.url
+        },
+        loading:false
+      }
+    case actionTypes.CHECK_FRIDGE:
+      let f = state.currentFridge;
+      if (!f.checks) {
+        f.checks = {};
+      }
+        f.checks[action.id] = action.data
+      const newCheck = {
+        ...action.data,
+        id: action.id,
+      }
+      return {
+        ...state,
+        currentFridge: {
+          ...f,
+          lastCheck: action.id
+        },
+      }
+    case actionTypes.GET_FRIDGE_CHECKS:
+      return {
+        ...state,
+        currentFridge: {
+          ...state.currentFridge,
+          checks: action.data
+        }
       }
     case actionTypes.CONFIRM_FRIDGE:
       const fridges = state.fridges;

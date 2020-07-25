@@ -19,7 +19,7 @@ const FridgeForm = (props) => {
     props.onClose();
   }
   return (
-    <Box overflow="auto" pad="medium" gap="medium" margin="medium">
+    <Box overflow="auto" pad="medium" gap="medium" margin="medium" margin={{bottom: '100px'}}>
     <Form onSubmit={(event) => onSubmit(event.value)}>
       <FormField name="name" htmlfor="textinput-id" label="Fridge Name">
         <TextInput id="textinput-id" name="name" placeholder="Community Fridge"/>

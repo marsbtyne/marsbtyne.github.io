@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import { Box } from 'grommet';
+
 import classes from  './Modal.module.css';
 
 
@@ -8,11 +11,11 @@ class InfoBox extends Component {
       <div className={classes.Info}>
         <div className={classes.popupContainer}>
         <div className={classes.popuBubbleAnchor}>
-          <div className={classes.popupBubble}>
+          <Box border="horizontal" pad="xsmall"
+        background={{ color: 'brand' }} className={classes.popupBubble}>
             {this.props.fridgeData.name}<br/>
             {this.props.fridgeData.streetAddress} <br />
-            {this.props.fridgeData.contactGroup}
-          </div>
+          </Box >
         </div>
         </div>
       </div>
