@@ -3,7 +3,11 @@ import Kitchen from '@material-ui/icons/Kitchen'
 import './pin.css'
 import InfoBox from './UI/InfoBox';
 
-const LocationPin = (props) => (
+const LocationPin = (props) => {
+
+  let hover = (props.hover === props.fridgeData.id);
+  return (
+
   <div
     className="pin"
     onMouseEnter={() => props.toggleHover(props.fridgeData.id)}
@@ -11,10 +15,9 @@ const LocationPin = (props) => (
     onClick={() => props.onModalOpen(props.fridgeData.id)}
   >
     <Kitchen className="pin-icon" />
-    {props.showInfoBox ? (<InfoBox className="mobile" fridgeData={props.fridgeData} />) : null}
-    {(props.hover === props.fridgeData.id && props.showInfoBox) ? <InfoBox className="desktop" fridgeData={props.fridgeData} /> : null}
-    
+    {props.showInfoBox ? (<InfoBox hover={hover}fridgeData={props.fridgeData} />) : null}    
   </div>
 );
+  }
 
 export default LocationPin;

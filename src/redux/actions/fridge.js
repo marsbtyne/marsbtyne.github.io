@@ -108,6 +108,33 @@ export const fetchFridges = () => {
   }
 }
 
+const formatRowDataIntoObjects = ([keys, ...rows]) => rows.map(row => {
+  const rowObj = {};
+  //const keysCamelCase = keys.map(camelCase);
+  for (let i = 0, l = keys.length; i < l; i++) {
+    if (row[i] && row[i] !== "") {
+      rowObj[keys[i]] = row[i];
+    }
+  }
+  return rowObj;
+});
+
+export const fetchSheet = () => {
+  return dispatch => {fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/1e9UYOdH8a006WOTL5hvGuzyTdpLfofVFig7X74ADv00/values/Sheet1?key=AIzaSyCOvDGXIuekFUUzSPh5l1940wCB657NudI`,
+  ).then(response => {
+    console.log(response);
+    const json = response.json().then(res => {
+      console.log('res', res);
+      console.log(res);
+    console.log('json formatted', formatRowDataIntoObjects(res.values));
+    });
+    
+  }).catch(error => {
+    });
+  }
+};
+
 export const getFridge = (fridgeID) => {
   return dispatch => {
     let url = '/fridges/'.concat(fridgeID, '.json');

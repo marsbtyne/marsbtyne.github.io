@@ -13,7 +13,11 @@ import classes from './container.module.css';
 import firebase from '../firebase';
 import Map from '../components/Map';
 
+const SPREADSHEET_ID = '1DRG5znk68V-m5KrWbuVNW5Uz1Xi_a9DxJ7BRgfRB800'
+
 class FridgeFinder extends Component {
+
+  
 
   constructor(props) {
     super(props)
@@ -31,6 +35,7 @@ class FridgeFinder extends Component {
       showInfoBox: true
     }
   }
+  
 
   onModalOpen = () => {
     this.setState({ modal: true });
@@ -109,7 +114,7 @@ class FridgeFinder extends Component {
           pad={{ horizontal: 'large', vertical: "small" }}
         >
           <Box height="xxsmall">
-            <Text size="xsmall" textAlign="center">Fridges are set up and maintained by mutual aid organizations and volunteers, aided by <Anchor href="https://www.instagram.com/iohnyc/">IOHNYC.</Anchor> Feed people not landfills, food sovereignty for all. </Text>
+            <Text size="xsmall" textAlign="center">Fridges are set up and autonomously maintained by mutual aid organizations and volunteers from the neighborhood, aided by <Anchor href="https://www.instagram.com/iohnyc/">IOHNYC. </Anchor> DM individual fridge Instagram pages to get involved. </Text>
             <Text size="xsmall" textAlign="center">Site built using <Anchor href="https://reactjs.org/">React, </Anchor> UI components from <Anchor href="https://v2.grommet.io/">Grommet.io. </Anchor> Source code: <Anchor icon={<GitHubIcon fontSize="small"/>} href="https://github.com/marsbtyne/nycfridge" /></Text>
             </Box>
             </Footer>

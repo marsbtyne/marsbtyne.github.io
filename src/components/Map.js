@@ -29,10 +29,32 @@ class Map extends Component {
       showInfoBox: true
     }
   }
+  componentDidMount(){
+    this.fetchSheet();
+  }
 
   focusTextInput() {
     this.textInput.current.focus();
   }
+
+  formatRowDataIntoObjects = ([keys, ...rows]) => rows.map(row => {
+    const rowObj = {};
+    //const keysCamelCase = keys.map(camelCase);
+    for (let i = 0, l = ; i < l; i++) {
+      if (row[i] && row[i] !== "") {
+        rowObj[keys[i]] = row[i];
+      }
+    }
+    return rowObj;
+  });
+  
+  fetchSheet = async () => {
+    const res = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/1e9UYOdH8a006WOTL5hvGuzyTdpLfofVFig7X74ADv00/values/Sheet1?key=AIzaSyCOvDGXIuekFUUzSPh5l1940wCB657NudI`,
+    );
+    const json = await res.json();
+    console.log(this.formatRowDataIntoObjects(json.values));
+  };
 
   bindResizeListener = (map, maps) => {
     maps.event.addDomListenerOnce(map, 'idle', () => {

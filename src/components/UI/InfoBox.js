@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 
 import { Box } from 'grommet';
 
-import classes from  './Modal.module.css';
+import './Modal.css';
 
 
 class InfoBox extends Component {
+  
   render () {
+    let b = this.props.hover ? 'brand' : '#f4f0ec'
     return (
-      <div className={classes.Info}>
-        <div className={classes.popupContainer}>
-        <div className={classes.popuBubbleAnchor}>
+      <div>
+        <div className="popupContainer">
+        <div className="popuBubbleAnchor">
           <Box border="horizontal" pad="xsmall"
-        background={{ color: 'brand' }} className={classes.popupBubble}>
+        background={{ color: b }} className="popupBubble">
             {this.props.fridgeData.name}<br/>
             {this.props.fridgeData.streetAddress} <br />
           </Box >
