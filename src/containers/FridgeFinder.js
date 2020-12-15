@@ -127,7 +127,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFridgesLoad: () => dispatch(actions.fetchFridges()),
+    //onFridgesLoad: () => dispatch(actions.fetchFridges()),
     onFridgeAdded: (fridge) => dispatch(actions.submitFridge(fridge)),
   }
 }

@@ -3,18 +3,20 @@ import Kitchen from '@material-ui/icons/Kitchen'
 import './pin.css'
 import InfoBox from './UI/InfoBox';
 
-const LocationPin = (props) => (
-  <div
+const LocationPin = ({showInfoBox, fridgeData, clickHandler}) => (
+  <React.Fragment>
+    <div
     className="pin"
-    onMouseEnter={() => props.toggleHover(props.fridgeData.id)}
-    onMouseLeave={() => props.toggleHover(props.fridgeData.id)}
-    onClick={() => props.onModalOpen(props.fridgeData.id)}
+    // onMouseEnter={() => props.toggleHover(props.fridgeData.id)}
+    // onMouseLeave={() => props.toggleHover(props.fridgeData.id)}
+    onClick={(event) => {clickHandler(fridgeData.id, event)} }
   >
     <Kitchen className="pin-icon" />
-    {props.showInfoBox ? (<InfoBox className="mobile" fridgeData={props.fridgeData} />) : null}
-    {(props.hover === props.fridgeData.id && props.showInfoBox) ? <InfoBox className="desktop" fridgeData={props.fridgeData} /> : null}
+    {showInfoBox ? (<InfoBox className="mobile" fridgeData={fridgeData} />) : null}
+    {(showInfoBox) ? <InfoBox className="desktop" fridgeData={fridgeData} /> : null}
     
   </div>
+  </React.Fragment>
 );
 
 export default LocationPin;

@@ -38,8 +38,11 @@ const FridgeForm = (props) => {
       <FormField name="neighborhood" htmlfor="textinput-id" label="Neighborhood">
         <TextInput id="textinput-id" name="neighborhood" placeholder="Bushwick" />
       </FormField>
-      <FormField name="link" htmlfor="textinput-id" label="Link/Contact">
-        <TextInput id="textinput-id" name="link" placeholder="Website/Social Media" />
+      <FormField name="instagram" htmlfor="textinput-id" label="Instagram handle">
+        <TextInput id="textinput-id" name="instagram" placeholder="@yourfridge" />
+      </FormField>
+      <FormField name="link" htmlfor="textinput-id" label="Additional Link/Contact">
+        <TextInput id="textinput-id" name="link" placeholder="Email address / volunteer form" />
       </FormField>
       <FormField name="notes" htmlfor="textinput-id" label="Notes">
         <TextArea id="textinput-id" name="notes" placeholder="type anything else people should know about this fridge!" />

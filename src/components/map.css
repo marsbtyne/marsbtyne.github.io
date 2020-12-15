@@ -28,6 +28,7 @@
   font-size: 1.3em;
 }
 
+
 .file-upload-wrapper {
   position: relative; 
   margin-bottom: 5px;
@@ -85,6 +86,9 @@
     font-size: 1.3rem;
     font-weight: 400;
   }
+  .ReactModal__Body--open {
+    width: 60%;
+}
 
   .pin {
     width: 15vw;
@@ -98,5 +102,13 @@
 @media screen and (max-width: 768px) {
   .google-map {
     height: 80vh;
+  }
+  .ReactModal__Body--open {
+    overflow: hidden;
+}
+  .modal {
+    margin: 0 auto;
+    background-color: #f8f7fa;
+    overflow:scroll;
   }
 }

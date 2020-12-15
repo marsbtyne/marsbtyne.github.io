@@ -5,6 +5,8 @@ import { Anchor, Box, Button, CheckBox, Heading, Image, Grommet, Layer, Form, Fo
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import Launch from '@material-ui/icons/Launch';
 
+import config from '../config';
+
 
 
 import LocationPin from './LocationPin';
@@ -201,7 +203,7 @@ class Map extends Component {
           </Layer>)}
         <GoogleMapReact
 
-          bootstrapURLKeys={{ key: process.env.REACT_APP_AUTH_TOKEN }}
+          bootstrapURLKeys={{ key: config.google.apiKey }}
           defaultCenter={this.props.location}
           defaultZoom={this.props.zoomLevel}
           yesIWantToUseGoogleMapApiInternals

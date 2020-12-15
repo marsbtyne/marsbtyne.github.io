@@ -3,12 +3,13 @@ import { Grommet, Box, TextInput, Text, Heading, Button } from 'grommet';
 import {Helmet} from 'react-helmet'
 import './App.css';
 import firebase from './firebase';
+import NewMap from './components/NewMap';
 
-import FridgeFinder from './containers/FridgeFinder'
+import FridgeFinder from './containers/FridgeFinder';
 
 class App extends Component {
   
-  render () {
+  render (props) {
     const theme = {
       global: {
        colors: {
@@ -40,7 +41,7 @@ class App extends Component {
   </Helmet>
   <Grommet>
     
-    <FridgeFinder />
+    <NewMap />
   </Grommet>
     </div>
   );
