@@ -15,13 +15,13 @@ const Head = (props) => {
       </Header>
       <Box justify="center" direction="row" pad="xsmall" gap="small">
         <Button primary label="Add Fridge" active onClick={props.openSubmissionModal} />
-        <CheckBox
+        {/* <CheckBox
           name="toggle"
           toggle
           checked={props.showInfoBox}
           label="Show Fridge Info Boxes"
         // onChange={event => this.setState({ showInfoBox: event.target.checked })}
-        />
+        /> */}
       </Box>
     </div>
   )

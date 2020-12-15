@@ -7,8 +7,9 @@ import GoogleMapReact from 'google-map-react';
 import { Box } from 'grommet';
 
 import config from '../config';
-import { getFridges } from '../redux/selectors'
-import { fetchFridges, submitFridge } from '../redux/actions/fridge';
+
+import { fetchFridges, setCurrentFridge, submitFridge } from '../redux/actions/fridge';
+import { getCurrentFridge } from '../redux/selectors'
 
 import LocationPin from './LocationPin';
 import FridgeModal from './UI/FridgeModal'
@@ -30,7 +31,6 @@ class NewMap extends Component {
       isInfoModalOpen: false,
       isSubmitModalOpen: false,
       isChecking: false,
-      selectedFridge: null,
     }
   }
   componentDidMount() {
@@ -40,8 +40,8 @@ class NewMap extends Component {
   openSubmissionModal = () => this.setState({ isSubmitModalOpen: true})
 
   openModal = (id, event) => {
+    this.props.setCurrentFridge( id)
     this.setState({ isInfoModalOpen: true})
-    this.setState({ selectedFridge: this.props.fridges.find(f => f.id == id) })
   }
   
   closeModal = () => {
@@ -59,6 +59,10 @@ class NewMap extends Component {
     this.setState({isChecking: true});
   }
 
+  submitCheck = () => {
+
+  }
+
 
 render () {
   let markers = this.props.fridges.map(f => {
@@ -74,10 +78,10 @@ render () {
   
   let modal;
   if (this.state.isChecking) {
-    modal = (<CheckFridge fridgeData={this.state.selectedFridge} />);
+    modal = (<CheckFridge fridgeData={this.props.currentFridge} />);
     
   } else {
-    modal = (<FridgeModal fridgeData={this.state.selectedFridge}/>)
+    modal = (<FridgeModal fridgeData={this.props.currentFridge}/>)
 }
   return (
   <div className={classes.Container}>
@@ -108,7 +112,11 @@ render () {
       isOpen={this.state.isInfoModalOpen}
       onRequestClose={this.closeModal}
     >
-      <FridgeModal fridgeData={this.state.selectedFridge}/>
+      <FridgeModal
+        fridgeData={this.props.currentFridge}
+        onClose={this.closeModal}
+        submitCheck={this.submitCheck}
+      />
     </Modal>
     </Box>
 
@@ -121,6 +129,7 @@ render () {
 const mapStateToProps = state => {
   return {
     fridges: state.fridges,
+    currentFridge: getCurrentFridge(state),
   }
 }
 
@@ -128,7 +137,7 @@ const mapDispatchToProps = dispatch => {
   return {
     submitFridge: (postData) => dispatch(submitFridge(postData)),
     fetchFridges: () => dispatch(fetchFridges()),
-    getFridges: () => dispatch(getFridges()),
+    setCurrentFridge: (fridgeID) => dispatch(setCurrentFridge(fridgeID)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewMap)

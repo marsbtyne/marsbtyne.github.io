@@ -5,6 +5,7 @@ export const FETCH_FRIDGE_START = 'FETCH_FRIDGE_START';
 export const FETCH_FRIDGE_FAIL = 'FETCH_FRIDGE_FAIL';
 
 export const GET_FRIDGE = 'GET_FRIDGE';
+export const SET_CURRENT = 'SET_CURRENT';
 
 export const UPDATE_FRIDGE = 'UPDATE_FRIDGE';
 

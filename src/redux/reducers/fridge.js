@@ -32,6 +32,11 @@ const reducer = (state = initialState, action) => {
         loading: true,
         submitted: false
       }
+    case actionTypes.SET_CURRENT:
+      return {
+        ...state,
+        currentFridge: action.data
+      }
     case actionTypes.CHECK_START: {
       return {
         ...state,
@@ -60,22 +65,21 @@ const reducer = (state = initialState, action) => {
         loading:false
       }
     case actionTypes.CHECK_FRIDGE:
-      let f = state.currentFridge;
-      if (!f.checks) {
-        f.checks = {};
-      }
-        f.checks[action.id] = action.data
-      const newCheck = {
-        ...action.data,
-        id: action.id,
-      }
-      return {
-        ...state,
-        currentFridge: {
+    let updatedFridges = state.fridges.map(f => {
+        if (f.id === state.currentFridge){
+          if (!f.checks) f.checks = {};
+          f.checks[action.id] = action.data;
+        }
+        return {
           ...f,
           lastCheck: action.id
-        },
+        }
+      });
+      return {
+        ...state,
+        fridges: updatedFridges,
       }
+      
     case actionTypes.GET_FRIDGE_CHECKS:
       return {
         ...state,
@@ -86,7 +90,7 @@ const reducer = (state = initialState, action) => {
       }
     case actionTypes.CONFIRM_FRIDGE:
       const fridges = state.fridges;
-      const updatedFridges = fridges.map(f => {
+      let updated = fridges.map(f => {
         if (f.id === action.id){
           f.confirmed = true;
         }
@@ -94,7 +98,7 @@ const reducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        fridges: updatedFridges,
+        fridges: updated,
         currentFridge: {
           ...state.currentFridge,
           confirmed: true

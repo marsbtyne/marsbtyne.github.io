@@ -26,6 +26,12 @@ export const addFridgeSuccess = (id, data) => {
   }
 };
 
+export const setCurrentFridge = (fridgeID) => {
+  return dispatch => {
+    dispatch(createActionObj(actionTypes.SET_CURRENT, fridgeID));
+  }
+}
+
 export const fetchFridges = () => {
   return async dispatch => {
     function onSuccess(response) {
@@ -80,17 +86,19 @@ export const submitFridge = (submissionData) => {
     } catch (error) {
       console.error("Could not fetch coordinates");
     }
-
-
-
   }
 }
 
 export const checkFridge = (data, fridge, image) => {
   return async dispatch => {
     function onSuccess(id, response, image, checkData) {
-      dispatch(postCheckImage(id, response.data.name, image));
+      console.log('success', response);
+      if (image) {
+        console.log('image', image)
+        dispatch(postCheckImage(id, response.data.name, image))
+      }
       dispatch(checkFridgeSuccess(response.data.name, checkData));
+      return response;
     }
     dispatch(createActionObj(actionTypes.CHECK_START));
     try {
@@ -99,11 +107,8 @@ export const checkFridge = (data, fridge, image) => {
         notes: data.notes,
         date: JSON.stringify(new Date())
       }
-    
-        let url = '/fridges/'.concat(fridge.id, '/checks.json');
-        const response = await axios.post(url, checkData)
-            
-            
+      let url = '/fridges/'.concat(fridge.id, '/checks.json');
+      const response = await axios.post(url, checkData)
       return onSuccess(fridge.id, response, image, checkData);
     } catch (error) {
       console.error("Could not post check")
@@ -111,43 +116,23 @@ export const checkFridge = (data, fridge, image) => {
   }
 }
 
-export const fetchFridgeFail = (error) => {
-  return {
-    type: actionTypes.FETCH_FRIDGE_FAIL
-  }
-}
-
-export const getFridgeChecksSuccess = (checkData) => {
-  return {
-    type: actionTypes.GET_FRIDGE_CHECKS,
-    data: checkData
-  }
-}
-
-export const getFridgeSuccess = (fridge) => {
-  return {
-    type: actionTypes.GET_FRIDGE,
-    data: fridge
-  }
-}
-
-
-
 export const getFridge = (fridgeID) => {
-  return dispatch => {
+  return async dispatch => {
+    function onSuccess(fetchedFridge) {
+      dispatch(createActionObj(actionTypes.GET_FRIDGE, fetchedFridge))
+    }
     let url = '/fridges/'.concat(fridgeID, '.json');
-    axios.get(url)
-      .then(response => {
-        const fetchedFridge = {
-          ...response.data,
-          id: fridgeID
-        }
-        console.log(fetchedFridge)
-        dispatch(getFridgeSuccess(fetchedFridge))
-      }).catch(error => {
+    try {
+      const response = await axios.get(url);
+      const fetchedFridge = {
+        ...response.data,
+        id: fridgeID
+      }
+      return onSuccess(fetchedFridge)
+    } catch(error) {
         console.log(error);
-      });
   }
+}
 }
 
 export const confirmFridge = (fridge) => {
@@ -218,7 +203,7 @@ export const getFridgeChecks = (id) => {
     let url = '/fridges/'.concat(id, '/checks.json');
     axios.get(url)
       .then(response => {
-        dispatch(getFridgeChecksSuccess(response.data));
+        dispatch(createActionObj(actionTypes.GET_FRIDGE_CHECKS, response.data));
       });
   }
 }
