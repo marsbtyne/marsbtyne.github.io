@@ -23,6 +23,7 @@
     "react-geocode": "^0.2.1",
     "react-google-maps": "^9.4.5",
     "react-helmet": "^6.1.0",
+    "react-modal": "^3.12.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
