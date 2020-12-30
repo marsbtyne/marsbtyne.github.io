@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
-import { Box } from 'grommet';
+import { Box, Button } from 'grommet';
 
 import config from '../config';
 
-import { fetchFridges, setCurrentFridge, submitFridge } from '../redux/actions/fridge';
+import { 
+  fetchFridges,
+  fetchFridgesJSON,
+  setCurrentFridge,
+  submitFridge,
+  updateFridge
+} from '../redux/actions/fridge';
 import { getCurrentFridge } from '../redux/selectors'
 
 import LocationPin from './LocationPin';
@@ -16,6 +23,7 @@ import FridgeModal from './UI/FridgeModal'
 import Header from './UI/Header';
 import FridgeForm from './FridgeForm';
 import CheckFridge from './CheckFridge';
+import InfoPage from './InfoPage';
 
 import classes from '../containers/container.module.css'
 import './map.css'
@@ -30,6 +38,7 @@ class NewMap extends Component {
     this.state = {
       isInfoModalOpen: false,
       isSubmitModalOpen: false,
+      isEditModalOpen: false,
       isChecking: false,
     }
   }
@@ -38,21 +47,54 @@ class NewMap extends Component {
   }
 
   openSubmissionModal = () => this.setState({ isSubmitModalOpen: true})
+  
+  openEditModal = () => {
+    this.setState({isEditModalOpen: true});
+    this.setState({isInfoModalOpen: false})
+  }
 
   openModal = (id, event) => {
     this.props.setCurrentFridge( id)
     this.setState({ isInfoModalOpen: true})
   }
+
+  downloadJSON = async () => {
+    let response = await this.props.fetchFridgesJSON();
+    console.log(response);
+      // 2. Create blob link to download
+      const url = window.URL.createObjectURL(new Blob([response]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `sample.json`);
+      // 3. Append to html page
+      document.body.appendChild(link);
+      // 4. Force download
+      link.click();
+      // 5. Clean up and remove the link
+      link.parentNode.removeChild(link);
+
+}
+  closeEditModal = () => {
+    this.setState({
+      isInfoModalOpen: true,
+      isEditModalOpen: false
+    })
+  }
   
   closeModal = () => {
     this.setState({
       isInfoModalOpen: false,
-      isSubmitModalOpen: false
+      isSubmitModalOpen: false,
     })
   }
 
   fridgeAdded = (postData) => {
     this.props.submitFridge(postData);
+  }
+
+  updateFridge = (updateData) => {
+    console.log(updateData);
+    this.props.updateFridge(updateData, this.props.currentFridge.id);
   }
 
   checkFridge = () => {
@@ -77,19 +119,23 @@ render () {
   });
   
   let modal;
-  if (this.state.isChecking) {
+  if (this.state.isEditModalOpen) {
     modal = (<CheckFridge fridgeData={this.props.currentFridge} />);
     
   } else {
     modal = (<FridgeModal fridgeData={this.props.currentFridge}/>)
 }
   return (
-  <div className={classes.Container}>
+  <div>
     <Header
       fridges={this.props.fridges}
       showInfoBox={true}
-      openSubmissionModal={this.openSubmissionModal}
     />
+    <Route path="/about" exact component={InfoPage} />
+    <Route path="/" exact render = {() => ( <div className={classes.Container}>
+      <Box justify="center" direction="row" pad="xsmall" gap="small">
+        <Button primary label="Add Fridge" active onClick={this.openSubmissionModal} />
+        </Box>
     <Modal
       isOpen={this.state.isSubmitModalOpen}
       onRequestClose={this.closeModal}
@@ -97,8 +143,21 @@ render () {
       <FridgeForm
           onClose={this.closeModal}
           onSubmit={this.fridgeAdded}
-        />
+          type="add"
+    />
     </Modal>
+    <Modal
+      isOpen={this.state.isEditModalOpen}
+      onRequestClose={this.closeEditModal}
+      >
+        <FridgeForm
+        onClose={this.closeEditModal}
+        onSubmit={this.updateFridge}
+        type="edit"
+        data={this.props.currentFridge}
+      />
+      </Modal>
+    
   <Box className="google-map">
     <GoogleMapReact
     bootstrapURLKeys={{ key: config.google.apiKey }}
@@ -116,10 +175,11 @@ render () {
         fridgeData={this.props.currentFridge}
         onClose={this.closeModal}
         submitCheck={this.submitCheck}
+        editFridge={this.openEditModal}
       />
     </Modal>
     </Box>
-
+    </div>)} />
 
   </div>
 )
@@ -136,7 +196,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     submitFridge: (postData) => dispatch(submitFridge(postData)),
+    updateFridge: (updateData, id) => dispatch(updateFridge(updateData, id)),
     fetchFridges: () => dispatch(fetchFridges()),
+    fetchFridgesJSON: () => dispatch(fetchFridgesJSON()),
     setCurrentFridge: (fridgeID) => dispatch(setCurrentFridge(fridgeID)),
   }
 }

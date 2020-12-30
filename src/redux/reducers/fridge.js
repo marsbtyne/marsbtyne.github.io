@@ -55,6 +55,17 @@ const reducer = (state = initialState, action) => {
         loading: false,
         submitted: true
       }
+    case actionTypes.UPDATE_FRIDGE:
+      let updatedF = state.fridges.map(f => {
+        if (f.id === state.currentFridge){
+          f = action.data
+        }
+        return f;
+      });
+      return {
+        ...state,
+        fridges: updatedF,
+      }
     case actionTypes.POST_CHECK_IMAGE:
       return {
         ...state,

@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Grommet,
+  Heading,
   Form,
   FormField,
   Select,
@@ -12,17 +13,26 @@ import {
 import { grommet } from 'grommet/themes';
 
 const FridgeForm = (props) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.data ? props.data : {});
 
-  const onSubmit = (event) => {
-    props.onSubmit(event)
+  const onSubmit = (value) => {
+    props.onSubmit(value)
     props.onClose();
   }
+
+  const header = (
+    <Heading>{props.type == "add" ? "Add New Fridge" : "Editing Fridge"}</Heading>
+  )
   return (
     <Box overflow="auto" pad="medium" gap="medium" margin="medium" margin={{bottom: '100px'}}>
-    <Form onSubmit={(event) => onSubmit(event.value)}>
+    {header}
+    <Form
+      onSubmit={({ value }) => onSubmit(value)}
+      value={value}
+      onChange={nextValue => setValue(nextValue)}
+    >
       <FormField name="name" htmlfor="textinput-id" label="Fridge Name">
-        <TextInput id="textinput-id" name="name" placeholder="Community Fridge"/>
+        <TextInput id="textinput-id" name="name"  placeholder="Community Fridge"/>
       </FormField>
       <FormField name="streetAddress" htmlfor="textinput-id" label="Location">
         <TextInput id="textinput-id" name="streetAddress" placeholder="Street Address" />
@@ -31,8 +41,8 @@ const FridgeForm = (props) => {
       <Select
       name="borough"
       options={['Brooklyn', 'Manhattan', 'Queens', 'Bronx', 'Staten Island']}
-      value={value}
-      onChange={({ option }) => setValue(option)}
+      // value={value}
+      // onChange={({ option }) => setValue(option)}
       />
       </FormField>
       <FormField name="neighborhood" htmlfor="textinput-id" label="Neighborhood">

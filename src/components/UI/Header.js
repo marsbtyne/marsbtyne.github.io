@@ -8,13 +8,16 @@ const Head = (props) => {
     
     <div>
       <Header background="light-4" pad="xsmall" justify="center">
-        <Box gap="small" alignSelf="center">
-          <Heading level="4">NYC Community Fridges</Heading>
-          <Text>Current Fridge Count : {props.fridges.length}</Text>
+        <Box margin="xsmall" gap="none" alignSelf="center">
+          <Heading  margin="xsmall" pad="none" level="3">NYC Community Fridges</Heading>
+          <Box gap="xsmall" direction="row">
+          <Anchor href='/'>Map</Anchor> |
+            <Anchor href='/about'>About</Anchor> | 
+           <Text>Current Fridge Count : {props.fridges.length}</Text> </Box>
         </Box>
       </Header>
-      <Box justify="center" direction="row" pad="xsmall" gap="small">
-        <Button primary label="Add Fridge" active onClick={props.openSubmissionModal} />
+      
+        {/* <Button primary label="Download JSON Data" active onClick={props.downloadData} /> */}
         {/* <CheckBox
           name="toggle"
           toggle
@@ -22,7 +25,6 @@ const Head = (props) => {
           label="Show Fridge Info Boxes"
         // onChange={event => this.setState({ showInfoBox: event.target.checked })}
         /> */}
-      </Box>
     </div>
   )
 }

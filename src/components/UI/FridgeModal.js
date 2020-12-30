@@ -60,6 +60,10 @@ const FridgeModal = (props) => {
     <CheckFridge f={props.fridgeData} confirmCheck={props.submitCheck} cancelCheck={setChecking} />
   )
 
+  const editButton = (
+    <Button onClick={props.editFridge} label="Edit Fridge" />
+  )
+
   const getMapLink = (lat, lng) => {
     return 'https://www.google.com/maps/dir/?api=1&destination='.concat(lat, ",", lng)
   }
@@ -96,6 +100,7 @@ const FridgeModal = (props) => {
 
         {lastChecked}
         {checking ? checkForm : checkButton}
+        {editButton}
       </Box>
     </Box>
   )

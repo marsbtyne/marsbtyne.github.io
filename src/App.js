@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Grommet, Box, TextInput, Text, Heading, Button } from 'grommet';
 import {Helmet} from 'react-helmet'
 import './App.css';
@@ -6,6 +7,8 @@ import firebase from './firebase';
 import NewMap from './components/NewMap';
 
 import FridgeFinder from './containers/FridgeFinder';
+
+
 
 class App extends Component {
   
@@ -34,16 +37,19 @@ class App extends Component {
       },
     };
   return (
+    <BrowserRouter>
     <div className="App">
       <Helmet>
     <title>Map of NYC Community Fridges</title>
     <meta name="description" content="Map of free community fridges and food shares across New York City" />
+    <meta name="keywords" content="Community Fridges, Mutual Aid, fridge, nyc, foodshare, free food, community, refrigerators, fridge map, nyc fridges, nyc free food, nyc fridge map, nyc community fridges"></meta>
   </Helmet>
   <Grommet>
     
     <NewMap />
   </Grommet>
     </div>
+    </BrowserRouter>
   );
 }
 }

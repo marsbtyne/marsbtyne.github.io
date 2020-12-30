@@ -55,6 +55,20 @@ export const fetchFridges = () => {
   }
 }
 
+export const fetchFridgesJSON = () => {
+  return async () => {
+    try {
+      const response = await axios.get('/fridges.json', {
+        responseType: 'blob',
+        timeout: 30000,
+      });
+      return response;
+    } catch (error) {
+      console.error('Data was not fetched.')
+    }
+  }
+}
+
 export const submitFridge = (submissionData) => {
   return async dispatch => {
     function onSuccess(response, data) {
@@ -85,6 +99,30 @@ export const submitFridge = (submissionData) => {
       }
     } catch (error) {
       console.error("Could not fetch coordinates");
+    }
+  }
+}
+
+export const updateFridge = (updatedData, fridgeID) => {
+  return async dispatch => {
+    function onSuccess(response) {
+      console.log(response.data);
+      dispatch(createActionObj(actionTypes.UPDATE_FRIDGE, response.data));
+      return response;
+    }
+    console.log(fridgeID);
+    try {
+      // const headers = {
+      //   'Content-Type': 'application/json',
+      // };
+      let url = '/fridges/'.concat(fridgeID, ".json");
+      // const response = await axios.put(url, updatedData, {headers: {
+      //   'Access-Control-Allow-Origin': true,
+      // }})
+      const response = await axios.put(url, updatedData);
+      return onSuccess(response);
+    } catch (error){
+      console.error("Could not update fridge.")
     }
   }
 }
