@@ -1,7 +1,7 @@
 {
   "name": "nycfridge",
   "version": "0.1.0",
-  "homepage": "http://marsbtyne.github.io",
+  "homepage": "http://marsbtyne.github.io/nycfridge",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
