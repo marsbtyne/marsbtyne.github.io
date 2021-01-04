@@ -37,7 +37,7 @@ class App extends Component {
       },
     };
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/nycfridge">
     <div className="App">
       <Helmet>
     <title>Map of NYC Community Fridges</title>

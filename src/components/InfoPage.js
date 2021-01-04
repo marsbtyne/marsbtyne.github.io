@@ -4,7 +4,8 @@ import { Anchor, Box, Button, Footer, Grommet, Heading, Paragraph, Text } from '
 import GitHubIcon from '@material-ui/icons/GitHub';
 import classes from '../containers/container.module.css';
 
-const InfoPage = () => (
+const InfoPage = (props) => (
+  
   <Box>
     <Box pad="large" size="medium" align="center">
       <Heading level="3">Welcome to the NYC Community Fridge Mapping project!</Heading>

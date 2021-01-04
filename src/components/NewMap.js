@@ -126,13 +126,13 @@ render () {
     modal = (<FridgeModal fridgeData={this.props.currentFridge}/>)
 }
   return (
-  <div>
+  <div className={classes.Container}>
     <Header
       fridges={this.props.fridges}
       showInfoBox={true}
     />
-    <Route path="/about" exact component={InfoPage} />
-    <Route path="/" exact render = {() => ( <div className={classes.Container}>
+    <Route path='/about' component={InfoPage} />
+    <Route path="/" exact render = {() => ( <div>
       <Box justify="center" direction="row" pad="xsmall" gap="small">
         <Button primary label="Add Fridge" active onClick={this.openSubmissionModal} />
         </Box>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'
 import { Anchor, Box, Button, CheckBox, Grommet, Heading, Header, Layer, Footer, Text } from 'grommet';
 import classes from '../../containers/container.module.css'
 
@@ -11,8 +12,10 @@ const Head = (props) => {
         <Box margin="xsmall" gap="none" alignSelf="center">
           <Heading  margin="xsmall" pad="none" level="3">NYC Community Fridges</Heading>
           <Box gap="xsmall" direction="row">
-          <Anchor href='/'>Map</Anchor> |
-            <Anchor href='/about'>About</Anchor> | 
+          <Link to={{pathname: '/'}}>
+            <Anchor>Map</Anchor>
+          </Link> |
+            <Link to={{pathname: '/about'}}><Anchor>About</Anchor></Link> | 
            <Text>Current Fridge Count : {props.fridges.length}</Text> </Box>
         </Box>
       </Header>
