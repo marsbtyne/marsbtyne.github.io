@@ -65,7 +65,7 @@ class Map extends Component {
   }
 
   getMapLink = (fridge) => {
-    return 'https://www.google.com/maps/dir/?api=1&destination='.concat(fridge.lat, ",", fridge.lng)
+    return 'https://www.google.com/maps/place/'.concat(fridge.streetAddress.split(' ').join('+'))
   }
 
   getChecks = (currentFridge) => {
