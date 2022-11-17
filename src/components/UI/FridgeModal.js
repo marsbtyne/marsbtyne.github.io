@@ -64,8 +64,8 @@ const FridgeModal = (props) => {
     <Button onClick={props.editFridge} label="Edit Fridge" />
   )
 
-  const getMapLink = (lat, lng) => {
-    return 'https://www.google.com/maps/dir/?api=1&destination='.concat(lat, ",", lng)
+  const getMapLink = (address) => {
+    return 'https://www.google.com/maps/place/'.concat(address.split(' ').join('+'))
   }
 
   return (
